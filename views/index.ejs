@@ -1,0 +1,31 @@
+<% include partials/header %>
+	<h1> Add Turtles </h1>
+	
+	<% if(errors) { %>
+		<ul>
+			<% errors.forEach(function(error) { %>
+				<li><%= error.msg %></li>
+			<% }) %>
+		</ul>
+	<% } %>	
+	<form method="POST" action="/turtles/add">
+		<label>Name</label><br>
+		<input type="text" name="name">
+		<br>
+		<label>Email</label><br>
+		<input type="text" name="email">
+		<br>
+		<label>Fav Food</label><br>
+		<input type="text" name="favFood">
+		<br><br>
+		<input type="submit" value="Submit">
+	</form>
+	
+
+	<h1> <%= title %> </h1>
+	<ul>
+		<% turtles.forEach(function(turtle) { %>
+			<li><%= turtle.name %> - <a href="#" class="deleteUser" data-id="<%= turtle._id %>">Delete</a></li>
+		<% }) %>
+	</ul>
+<% include partials/footer %>

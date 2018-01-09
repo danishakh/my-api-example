@@ -1,0 +1,31 @@
+{
+  "name": "my-express-app",
+  "version": "1.0.0",
+  "description": "Attempt to develop my own node/express app",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/danishakh/my-api-example.git"
+  },
+  "keywords": [
+    "api",
+    "node",
+    "express",
+    "javascript"
+  ],
+  "author": "Danish Akhtar <danishakh@gmail.com>",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/danishakh/my-api-example/issues"
+  },
+  "homepage": "https://github.com/danishakh/my-api-example#readme",
+  "dependencies": {
+    "ejs": "^2.5.7",
+    "express": "^4.16.2",
+    "express-validator": "^4.3.0",
+    "mongojs": "^2.4.1"
+  }
+}
