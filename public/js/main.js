@@ -1,5 +1,5 @@
 $(document).ready(function(){
-	$(".deleteUser").on("click", deleteUser);
+	$(".delete-turtle").on("click", deleteUser);
 });
 
 function deleteUser() {

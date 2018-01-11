@@ -1,31 +1,66 @@
 <% include partials/header %>
-	<h1> Add Turtles </h1>
 	
-	<% if(errors) { %>
+	<!-- <% if(errors) { %>
 		<ul>
 			<% errors.forEach(function(error) { %>
 				<li><%= error.msg %></li>
 			<% }) %>
 		</ul>
-	<% } %>	
-	<form method="POST" action="/turtles/add">
-		<label>Name</label><br>
-		<input type="text" name="name">
-		<br>
-		<label>Email</label><br>
-		<input type="text" name="email">
-		<br>
-		<label>Fav Food</label><br>
-		<input type="text" name="favFood">
-		<br><br>
-		<input type="submit" value="Submit">
-	</form>
+	<% } %>	 -->
+
 	
 
-	<h1> <%= title %> </h1>
-	<ul>
-		<% turtles.forEach(function(turtle) { %>
-			<li><%= turtle.name %> - <a href="#" class="deleteUser" data-id="<%= turtle._id %>">Delete</a></li>
-		<% }) %>
-	</ul>
+	<div class="form-container col-lg-6 col-lg-offset-3">
+
+		<h1> Add Turtles </h1>
+
+		<form method="POST" action="/turtles/add">
+			<div class="form-group">
+				<label>Name</label><br>
+				<input class="form-control" type="text" name="name">
+			</div>
+			<div class="form-group">
+				<label>Email</label><br>
+				<input class="form-control" type="text" name="email">
+			</div>
+			<div class="form-group">
+				<label>Fav Food</label><br>
+				<input class="form-control" type="text" name="favFood">
+			</div>
+			<div class="form-group">
+				<label>Image URL</label><br>
+				<input class="form-control" type="text" name="image">
+			</div>
+			<input class="btn btn-primary" type="submit" value="Submit">
+		</form>
+	</div>
+	<div class="views-container col-lg-10 col-lg-offset-1">
+		<h1> My TMNT Squad </h1> <a href="http://127.0.0.1:3000/api/turtles" class="btn btn-primary get-turtles-json glyphicon glyphicon-info-sign"></a>
+
+		<table class="table">
+		  <thead>
+		    <tr>
+		      <th scope="col"img</th>
+		      <th scope="col">Name</th>
+		      <th scope="col">Email</th>
+		      <th scope="col">Fav Food</th>
+		    </tr>
+		  </thead>
+		  <tbody>
+		  	<% turtles.forEach(function(turtle) { %>
+		  		<tr id="<%= turtle._id %>">
+		  			<th scope="row"><img src="<%= turtle.image %>" width="150" height="150"></th>
+		  			<td><%= turtle.name %></td>
+		  			<td><%= turtle.email %></td>
+		  			<td><%= turtle.favFood %></td>
+		  			<td>
+		  				<a href="#" class="btn btn-danger delete-turtle glyphicon glyphicon-trash" data-id="<%= turtle._id %>"></a>
+		  				<a title="Get JSON" href="http://127.0.0.1:3000/api/turtles/<%= turtle._id %>" class="btn btn-info json-turtle glyphicon glyphicon-info-sign" data-id="<%= turtle._id %>"></a>
+		  			</td>
+		  		</tr>
+	  		<% }) %>
+		  </tbody>
+		</table>
+	</div>
+	
 <% include partials/footer %>

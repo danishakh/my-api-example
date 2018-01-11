@@ -11,7 +11,6 @@ const { matchedData, sanitize } = require('express-validator/filter');
 // MongoJS
 const mongojs = require('mongojs');
 const db = mongojs('tmntapp', ['turtles']);
-
 var ObjectId = mongojs.ObjectId;
 
 const app = express();
@@ -68,26 +67,19 @@ app.use(express.static(path.join(__dirname, 'public')));
 // ]
 
 
-// app.get('/', (req, res) => {
-// 	//take the response and send
-// 	res.json(turtle);
-// });
-
-
-
 // Render the view we want with the objects we want to display?
 app.get('/', (req, res) => {
 	db.turtles.find( (err, docs) => {
-		console.log(docs);
+		//console.log(docs);
 		res.render('index', {
 			title: 'Turtles',
 			//turtles: turtles
 			turtles: docs		// coming from the db
 		});
 	});
-
 });
 
+// Add a turtle
 app.post('/turtles/add', [
 	check('name').isLength({ min: 1 }).withMessage("Name is required!"),
 
@@ -95,7 +87,8 @@ app.post('/turtles/add', [
 	.exists().withMessage('favFood is required!')
 	.isEmail().withMessage('This field must be a valid email'),
 
-	check('favFood').isLength({ min: 1}).withMessage('Fav Food is required!')
+	check('favFood').isLength({ min: 1}).withMessage('Fav Food is required!'),
+	check('image').isURL().withMessage('must be a URL')
 	], (req, res) => {
 
 		// Get the validation result whenever you want; see the Validation Result API for all options!
@@ -116,7 +109,8 @@ app.post('/turtles/add', [
 			var newTurtle = {
 				name: req.body.name,
 				email: req.body.email,
-				favFood: req.body.favFood
+				favFood: req.body.favFood,
+				image: req.body.image
 			}
 
 			//console.log('Created ' + req.body.name + ' successfully!');
@@ -133,6 +127,7 @@ app.post('/turtles/add', [
 	console.log(newTurtle);
 });
 
+// Delete a turtle
 app.delete('/turtles/delete/:id', (req, res) => {
 	//console.log(req.params.id);
 
@@ -141,6 +136,27 @@ app.delete('/turtles/delete/:id', (req, res) => {
 			console.log(err);
 		}
 		res.redirect('/');
+	});
+});
+
+// Get turtles JSON format
+app.get('/api/turtles', (req, res) => {
+	db.turtles.find( (err, docs) => {
+		//console.log(docs);
+		if(err) {
+			console.log(err);
+		}
+		res.json(docs);
+	});
+});
+
+// Get turtle JSON by _Id
+app.get('/api/turtles/:_id', (req, res) => {
+	db.turtles.findOne({_id: ObjectId(req.params._id)}, (err, docs) => {
+		if(err) {
+			console.log(err);
+		}
+		res.json(docs);
 	});
 });
 
